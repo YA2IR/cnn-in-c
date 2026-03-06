@@ -41,18 +41,18 @@ You can adjust the hyperparameters in `hyperparams.h`, but the architecture is i
 Mac:~ clang -O3 -o main main.c matrix.c cnn.c && ./main
 
 ------------------------
-Epoch 1: train_acc = 85.2%, val_acc = 91.6%
-Epoch 2: train_acc = 90.6%, val_acc = 93.7%
-Epoch 3: train_acc = 91.7%, val_acc = 94.5%
-Epoch 4: train_acc = 92.2%, val_acc = 94.7%
-Epoch 5: train_acc = 92.6%, val_acc = 94.7%
+Epoch 1: train_acc = 91.6%, val_acc = 97.4%
+Epoch 2: train_acc = 97.1%, val_acc = 97.6%
+Epoch 3: train_acc = 97.9%, val_acc = 97.9%
+Epoch 4: train_acc = 98.3%, val_acc = 98.1%
+Epoch 5: train_acc = 98.6%, val_acc = 98.2%
 
 ------------------------
-test accuracy: 93.5%
+test accuracy: 97.9%
 
 Exit success.
 ```
 
 ## Credits
 - The mnist loader `mnist.h` is taken from https://github.com/projectgalateia/mnist
-- MNIST data are taken from [Yann LeCun](http://yann.lecun.com/) et al 
+- MNIST data are taken from [Yann LeCun](http://yann.lecun.com/) et al

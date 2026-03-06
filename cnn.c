@@ -661,7 +661,7 @@ void backward(generic_layer curr, generic_layer next, int start_idx, int end_idx
                 fully_connected *next_fc = (fully_connected*)next.layer;
                 matrix temp = { next_fc->w->n_cols, next_fc->dZ->n_cols, NULL };
                 init_matrix(&temp);
-                mat_mul_transpose_a(next_fc->w, next_fc->dZ, &temp, start_idx, end_idx);
+                mat_mul_transpose_a(next_fc->w, next_fc->dZ, &temp, 0, local_batch_size);
 
                 matrix deriv = { fc->Z->n_rows, fc->Z->n_cols, NULL };
                 init_matrix(&deriv);
@@ -673,7 +673,7 @@ void backward(generic_layer curr, generic_layer next, int start_idx, int end_idx
                 free_matrix(&temp);
                 free_matrix(&deriv);
             }
-            clip_matrix(fc->dZ, 3.0f, start_idx, end_idx);
+            clip_matrix(fc->dZ, 3.0f, 0, local_batch_size);
 
             matrix dW = { fc->w->n_rows, fc->w->n_cols, NULL };
             init_matrix(&dW);
@@ -687,7 +687,7 @@ void backward(generic_layer curr, generic_layer next, int start_idx, int end_idx
             }
 
             free_matrix(&dW);
-            clip_matrix(fc->dw, 3.0f, start_idx, end_idx);
+            clip_matrix(fc->dw, 3.0f, 0, fc->dw->n_cols);
 
             for (int i = 0; i < fc->db->n_rows; i++) {
                 float sum = 0.0f;
@@ -699,7 +699,7 @@ void backward(generic_layer curr, generic_layer next, int start_idx, int end_idx
 
             matrix dA_prev = { fc->w->n_cols, fc->dZ->n_cols, NULL};
             init_matrix(&dA_prev);
-            mat_mul_transpose_a(fc->w, fc->dZ, &dA_prev, start_idx, end_idx);
+            mat_mul_transpose_a(fc->w, fc->dZ, &dA_prev, 0, local_batch_size);
 
             OMP_PARALLEL_FOR
             for (int i=0; i<dA_prev.n_rows; i++)
@@ -868,5 +868,4 @@ void free_network(generic_layer *network) {
         }
     }
 }
-
 
